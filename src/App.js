@@ -16,7 +16,13 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            <PizzaBlock title={"Hello"} price={100} />
+            <PizzaBlock
+              title={"Мексиканская"}
+              price={100}
+              types={[0, 1]}
+              image="notIMG"
+              sizes={[40, 30, 20]}
+            />
           </div>
         </div>
       </div>
