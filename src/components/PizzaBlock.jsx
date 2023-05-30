@@ -16,13 +16,13 @@ export function PizzaBlock({title, price, image, sizes, types}) {
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {types.map((type) => (
-            <li onClick={() => setTypeActive(type)} className={typeActive === type ? "active" : ""}>{typeNames[type]}</li>
+          {types.map((type, index) => (
+            <li key={index} onClick={() => setTypeActive(type)} className={typeActive === type ? "active" : ""}>{typeNames[type]}</li>
           ))}
         </ul>
         <ul>
           {sizes.map((size, index) => (
-            <li onClick={() => setSizeActive(index)} className={sizeActive === index ? "active" : ""}>{size} см.</li>
+            <li key={index} onClick={() => setSizeActive(index)} className={sizeActive === index ? "active" : ""}>{size} см.</li>
           ))}
         </ul>
       </div>
