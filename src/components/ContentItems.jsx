@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { PizzaBlock } from "./PizzaBlock";
+import PizzaBlockSkeleton from "./skeletons/PizzaBlockSkeleton";
 
 
 export function ContentItems(){
-const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,24 +20,20 @@ const [items, setItems] = useState([]);
         setItems(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false)
       }
     };
     fetchData();
   }, []);
 
 
-  return (<><h2 className="content__title">Все пиццы</h2>
+  return (<><h2 className="content__title">{isLoading ? "Загрузка..." : "Все пиццы"}</h2>
           <div className="content__items">
-            {items.map((item, index) => (
-              <PizzaBlock
-                key={index}
-                image={item.imageUrl}
-                title={item.title}
-                price={item.price}
-                types={item.types}
-                sizes={item.sizes}
-              />
-            ))}
+          {
+            isLoading ? [...new Array(6)].map((_, index) => <PizzaBlockSkeleton key={index}/>)
+            : items.map((item) => <PizzaBlock key={item.id} {...item}/>)
+          }
           </div>
         </>)
         }
