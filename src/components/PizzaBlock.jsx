@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function PizzaBlock({title, price, image, sizes, types}) {
+export function PizzaBlock({title, price, imageUrl, sizes, types}) {
   const [sizeActive, setSizeActive] = useState(0)
   const [typeActive, setTypeActive] = useState(0)
   
@@ -10,7 +10,7 @@ export function PizzaBlock({title, price, image, sizes, types}) {
     <div className="pizza-block">
       <img
         className="pizza-block__image"
-        src={image}
+        src={imageUrl}
         alt="Pizza"
       />
       <h4 className="pizza-block__title">{title}</h4>
