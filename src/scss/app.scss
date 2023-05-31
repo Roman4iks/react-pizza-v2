@@ -14,13 +14,22 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
+  @media (max-width: 645) {
+    width: calc(100vw - 30px);
+    margin-top: 20px;
+  }
 }
 
 .content {
+  margin: 0 10px 0 10px;
   padding: 40px 0;
 
   &__title {
-    margin: 35px 0;
+    font-weight: 800;
+    font-style: 38px;
+    margin-top: 60px;
+    margin-bottom: 50px;
   }
 
   &__items {
@@ -46,11 +55,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  
+ 
     @media (max-width: 1260px) {
       .categories {
         width: 100%;
-        overflow: scroll;
+        overflow: auto;
 
 
         ul {
@@ -58,7 +67,6 @@ body {
         }
       }
       .sort {
-       padding-left: 20px;
         b {
           display: none;
         }
