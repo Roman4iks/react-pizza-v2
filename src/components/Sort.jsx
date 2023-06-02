@@ -40,7 +40,9 @@ export function Sort({ sort, setSort }) {
               <li
                 key={index}
                 onClick={() => onClickSort(sortItem)}
-                className={sort === index ? 'active' : ''}
+                className={
+                  sort.sortProperty === sortItem.sortProperty ? 'active' : ''
+                }
               >
                 {sortItem.name}
               </li>
