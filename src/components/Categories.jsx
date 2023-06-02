@@ -1,7 +1,4 @@
-import { useState } from 'react';
-
-export function Categories() {
-  const [acitveCategory, setAcitveCategory] = useState(0);
+export function Categories({ categoryID, setCategoryID }) {
   const categories = [
     'Все',
     'Мясные',
@@ -17,8 +14,8 @@ export function Categories() {
         {categories.map((category, index) => (
           <li
             key={index}
-            onClick={() => setAcitveCategory(index)}
-            className={acitveCategory === index ? 'active' : ''}
+            onClick={() => setCategoryID(index)}
+            className={categoryID === index ? 'active' : ''}
           >
             {category}
           </li>
