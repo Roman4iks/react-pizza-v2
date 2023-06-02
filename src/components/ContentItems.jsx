@@ -9,10 +9,9 @@ export function ContentItems({ sort, search, categoryID }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(sort);
         const response = await fetch(
           `https://64762957e607ba4797dd62ed.mockapi.io/pizza/items?${
-            !sort
+            sort
               ? ''
               : `&sortBy=${sort.sortProperty.replace('-', '')}&order=${
                   sort.sortProperty.includes('-') ? 'asc' : 'desc'
