@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react';
 import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 
-export function ContentItems({ sort, order, search, categoryID }) {
+export function ContentItems({ sort, search, categoryID }) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(sort);
         const response = await fetch(
-          `https://64762957e607ba4797dd62ed.mockapi.io/pizza/items?sortBy=${sort}&order=${order}&search=${search}&category=${categoryID}`
+          `https://64762957e607ba4797dd62ed.mockapi.io/pizza/items?${
+            !sort ? '' : `&sortBy=${sort.sortProperty}`
+          }${search === '' ? '' : `&search=${search}`}${
+            categoryID === 0 ? '' : `&category=${categoryID}`
+          }`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch data');
@@ -24,7 +29,7 @@ export function ContentItems({ sort, order, search, categoryID }) {
       }
     };
     fetchData();
-  }, [sort, order, search, categoryID]);
+  }, [sort, search, categoryID]);
 
   return (
     <>
