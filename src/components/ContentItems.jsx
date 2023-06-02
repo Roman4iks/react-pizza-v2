@@ -12,7 +12,11 @@ export function ContentItems({ sort, search, categoryID }) {
         console.log(sort);
         const response = await fetch(
           `https://64762957e607ba4797dd62ed.mockapi.io/pizza/items?${
-            !sort ? '' : `&sortBy=${sort.sortProperty}`
+            !sort
+              ? ''
+              : `&sortBy=${sort.sortProperty.replace('-', '')}&order=${
+                  sort.sortProperty.includes('-') ? 'asc' : 'desc'
+                }`
           }${search === '' ? '' : `&search=${search}`}${
             categoryID === 0 ? '' : `&category=${categoryID}`
           }`

@@ -1,9 +1,12 @@
 import { useState } from 'react';
 
 const sorting = [
-  { name: 'популярности', sortProperty: 'rating' },
-  { name: 'цене', sortProperty: 'price' },
-  { name: 'алфавиту', sortProperty: 'title' },
+  { name: 'популярности убыванию', sortProperty: 'rating' },
+  { name: 'популярности возрастание', sortProperty: '-rating' },
+  { name: 'цене убыванию', sortProperty: 'price' },
+  { name: 'цене возрастанию', sortProperty: '-price' },
+  { name: 'алфавиту убыванию', sortProperty: 'title' },
+  { name: 'алфавиту возрастанию', sortProperty: '-title' },
 ];
 
 export function Sort({ sort, setSort }) {
