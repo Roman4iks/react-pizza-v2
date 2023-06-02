@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 
-export function ContentItems({ sort, search, categoryID }) {
+export function ContentItems({ sort, search, categoryID, page, limit }) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,7 +18,7 @@ export function ContentItems({ sort, search, categoryID }) {
                 }`
           }${search === '' ? '' : `&search=${search}`}${
             categoryID === 0 ? '' : `&category=${categoryID}`
-          }`
+          }${!limit ? '' : `&limit=${limit}`}${!page ? '' : `&page=${page}`}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch data');
@@ -32,7 +32,7 @@ export function ContentItems({ sort, search, categoryID }) {
       }
     };
     fetchData();
-  }, [sort, search, categoryID]);
+  }, [sort, search, categoryID, page, limit]);
 
   return (
     <>
