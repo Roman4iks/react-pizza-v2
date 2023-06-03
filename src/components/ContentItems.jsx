@@ -4,12 +4,14 @@ import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 import { SeacrhContext } from '../App';
 import { useSelector } from 'react-redux';
 
-export function ContentItems({ page, limit }) {
+export function ContentItems() {
   const [items, setItems] = useState([]);
   const categoryID = useSelector((state) => state.filter.index);
   const sort = useSelector((state) => state.sort);
+  const page = useSelector((state) => state.page.current);
+  const limit = useSelector((state) => state.page.limit);
+  const searchValue = useSelector((state) => state.search.value);
   const [isLoading, setIsLoading] = useState(true);
-  const { searchValue } = useContext(SeacrhContext);
 
   useEffect(() => {
     const fetchData = async () => {

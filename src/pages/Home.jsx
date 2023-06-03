@@ -5,9 +5,6 @@ import { ContentItems } from '../components/ContentItems';
 import { Pagination } from '../components/Pagination';
 
 export const Home = () => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(4);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -18,8 +15,8 @@ export const Home = () => {
         <Categories />
         <Sort />
       </div>
-      <ContentItems page={page} limit={limit} />
-      <Pagination onChangePage={(number) => setPage(number)} />
+      <ContentItems />
+      <Pagination />
     </div>
   );
 };
