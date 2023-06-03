@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { SeacrhContext } from '../../App';
+import React from 'react';
 import styles from './Search.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { setValue } from '../../redux/slices/searchSlice';
