@@ -5,10 +5,6 @@ import { ContentItems } from '../components/ContentItems';
 import { Pagination } from '../components/Pagination';
 
 export const Home = () => {
-  const [sort, setSort] = useState({
-    name: 'популярности',
-    sortProperty: 'rating',
-  });
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(4);
 
@@ -20,9 +16,9 @@ export const Home = () => {
     <div className="container">
       <div className="content__top">
         <Categories />
-        <Sort sort={sort} setSort={setSort} />
+        <Sort />
       </div>
-      <ContentItems page={page} limit={limit} sort={sort} />
+      <ContentItems page={page} limit={limit} />
       <Pagination onChangePage={(number) => setPage(number)} />
     </div>
   );

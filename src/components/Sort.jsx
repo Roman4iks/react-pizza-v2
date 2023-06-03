@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSort } from '../redux/slices/sortSlice';
 
 const sorting = [
   { name: 'популярности убыванию', sortProperty: 'rating' },
@@ -9,11 +11,14 @@ const sorting = [
   { name: 'алфавиту возрастанию', sortProperty: '-title' },
 ];
 
-export function Sort({ sort, setSort }) {
+export function Sort() {
   const [popupActive, setPopupActive] = useState(false);
 
+  const sort = useSelector((state) => state.sort);
+  const dispatch = useDispatch();
+
   function onClickSort(sortItem) {
-    setSort(sortItem);
+    dispatch(setSort(sortItem));
     setPopupActive(false);
   }
 
