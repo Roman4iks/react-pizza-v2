@@ -10,7 +10,6 @@ export const Home = () => {
     name: 'популярности',
     sortProperty: 'rating',
   });
-  const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(4);
 
@@ -29,7 +28,6 @@ export const Home = () => {
         limit={limit}
         categoryID={categoryID}
         sort={sort}
-        search={search}
       />
       <Pagination onChangePage={(number) => setPage(number)} />
     </div>

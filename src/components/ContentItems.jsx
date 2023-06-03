@@ -1,22 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
+import { SeacrhContext } from '../App';
 
-export function ContentItems({ sort, search, categoryID, page, limit }) {
+export function ContentItems({ sort, categoryID, page, limit }) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { searchValue } = useContext(SeacrhContext);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
           `https://64762957e607ba4797dd62ed.mockapi.io/pizza/items?${
-            sort
+            !sort
               ? ''
               : `&sortBy=${sort.sortProperty.replace('-', '')}&order=${
                   sort.sortProperty.includes('-') ? 'asc' : 'desc'
                 }`
-          }${search === '' ? '' : `&search=${search}`}${
+          }${searchValue === '' ? '' : `&search=${searchValue}`}${
             categoryID === 0 ? '' : `&category=${categoryID}`
           }${!limit ? '' : `&limit=${limit}`}${!page ? '' : `&page=${page}`}`
         );
@@ -32,7 +34,7 @@ export function ContentItems({ sort, search, categoryID, page, limit }) {
       }
     };
     fetchData();
-  }, [sort, search, categoryID, page, limit]);
+  }, [sort, searchValue, categoryID, page, limit]);
 
   return (
     <>
