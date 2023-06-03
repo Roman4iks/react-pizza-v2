@@ -2,9 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 import { SeacrhContext } from '../App';
+import { useSelector } from 'react-redux';
 
-export function ContentItems({ sort, categoryID, page, limit }) {
+export function ContentItems({ sort, page, limit }) {
   const [items, setItems] = useState([]);
+  const categoryID = useSelector((state) => state.filter.index);
   const [isLoading, setIsLoading] = useState(true);
   const { searchValue } = useContext(SeacrhContext);
 
