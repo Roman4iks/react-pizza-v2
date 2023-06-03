@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setIndex } from '../redux/slices/filterSlice';
+import { setCategoryID } from '../redux/slices/filterSlice';
 
 export function Categories() {
   const categories = [
@@ -11,7 +11,7 @@ export function Categories() {
     'Закрытые',
   ];
 
-  const filter = useSelector((state) => state.filter.index);
+  const filter = useSelector((state) => state.filter.categoryID);
   const dispatch = useDispatch();
 
   return (
@@ -20,7 +20,7 @@ export function Categories() {
         {categories.map((category, index) => (
           <li
             key={index}
-            onClick={() => dispatch(setIndex(index))}
+            onClick={() => dispatch(setCategoryID(index))}
             className={filter === index ? 'active' : ''}
           >
             {category}

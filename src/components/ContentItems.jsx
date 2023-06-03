@@ -6,11 +6,11 @@ import axios from 'axios';
 
 export function ContentItems() {
   const [items, setItems] = useState([]);
-  const categoryID = useSelector((state) => state.filter.index);
-  const sort = useSelector((state) => state.sort);
-  const page = useSelector((state) => state.page.current);
-  const limit = useSelector((state) => state.page.limit);
-  const searchValue = useSelector((state) => state.search.value);
+  const categoryID = useSelector((state) => state.filter.categoryID);
+  const sort = useSelector((state) => state.filter.sort);
+  const page = useSelector((state) => state.filter.page);
+  const limit = useSelector((state) => state.filter.limit);
+  const searchValue = useSelector((state) => state.filter.search);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
