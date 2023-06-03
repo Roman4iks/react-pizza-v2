@@ -17,15 +17,17 @@ export function ContentItems() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          'https://64762957e607ba4797dd62ed.mockapi.io/pizza/items',
+          `https://64762957e607ba4797dd62ed.mockapi.io/pizza/items`,
           {
             params: {
-              sortBy: sort && sort.sortProperty.replace('-', ''),
-              order: sort && sort.sortProperty.includes('-') ? 'asc' : 'desc',
-              search: searchValue,
-              category: categoryID,
-              limit: limit,
-              page: page,
+              ...(sort && {
+                sortBy: sort.sortProperty.replace('-', ''),
+                order: sort.sortProperty.includes('-') ? 'asc' : 'desc',
+              }),
+              ...(searchValue && { search: searchValue }),
+              ...(categoryID !== 0 && { category: categoryID }),
+              ...(limit && { limit: limit }),
+              ...(page && { page: page }),
             },
           }
         );
