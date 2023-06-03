@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export function ContentItems() {
   const [items, setItems] = useState([]);
@@ -15,22 +16,20 @@ export function ContentItems() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://64762957e607ba4797dd62ed.mockapi.io/pizza/items?${
-            !sort
-              ? ''
-              : `&sortBy=${sort.sortProperty.replace('-', '')}&order=${
-                  sort.sortProperty.includes('-') ? 'asc' : 'desc'
-                }`
-          }${searchValue === '' ? '' : `&search=${searchValue}`}${
-            categoryID === 0 ? '' : `&category=${categoryID}`
-          }${!limit ? '' : `&limit=${limit}`}${!page ? '' : `&page=${page}`}`
+        const response = await axios.get(
+          'https://64762957e607ba4797dd62ed.mockapi.io/pizza/items',
+          {
+            params: {
+              sortBy: sort && sort.sortProperty.replace('-', ''),
+              order: sort && sort.sortProperty.includes('-') ? 'asc' : 'desc',
+              search: searchValue,
+              category: categoryID,
+              limit: limit,
+              page: page,
+            },
+          }
         );
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setItems(data);
+        setItems(response.data);
       } catch (error) {
         console.log(error);
       } finally {
