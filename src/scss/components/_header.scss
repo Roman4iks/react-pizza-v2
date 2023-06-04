@@ -17,8 +17,15 @@
         margin-top: 20px;
       }
     }
-
-
+    @media (max-width: 1000px) {
+      width: max-content;
+    }
+    @media (max-width: 960px) {
+      flex-direction: column;
+    }
+    @media (max-width: 500px) {
+      font-size: 12px;
+    }
   }
 
   &__logo {
@@ -38,6 +45,10 @@
 
     p {
       color: #7b7b7b;
+    }
+    @media (max-width: 420px) {
+      align-items: center;
+      justify-content: center;
     }
   }
 }
