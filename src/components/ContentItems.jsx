@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ export function ContentItems() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getPizzas = async () => {
+  const getPizzas = useCallback(async () => {
     if (!isSearch.current) {
       dispatch(
         fetchPizzas({
@@ -35,7 +35,7 @@ export function ContentItems() {
       );
     }
     window.scrollTo(0, 0);
-  };
+  }, [dispatch, categoryID, sort, page, limit, searchValue]);
 
   useEffect(() => {
     if (window.location.search) {
@@ -62,7 +62,7 @@ export function ContentItems() {
 
   useEffect(() => {
     getPizzas();
-  }, []);
+  }, [getPizzas]);
 
   useEffect(() => {
     if (isMounted.current) {
