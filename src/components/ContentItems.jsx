@@ -9,14 +9,12 @@ import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 
 import { sorting } from './Sort';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
-import { setFilters } from '../redux/slices/filterSlice';
+import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 
 export function ContentItems() {
-  const categoryID = useSelector((state) => state.filter.categoryID);
-  const sort = useSelector((state) => state.filter.sort);
-  const page = useSelector((state) => state.filter.page);
-  const limit = useSelector((state) => state.filter.limit);
-  const searchValue = useSelector((state) => state.filter.search);
+  const { categoryID, sort, page, limit, searchValue } =
+    useSelector(selectFilter);
+
   const { items, status, messageError } = useSelector((state) => state.pizza);
 
   const isSearch = useRef(false);
@@ -69,6 +67,7 @@ export function ContentItems() {
 
   useEffect(() => {
     if (isMounted.current) {
+      // FIX base url page
       const queryString = qs.stringify({
         sortProperty: sort.sortProperty,
         categoryID,
@@ -78,19 +77,23 @@ export function ContentItems() {
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [sort, categoryID, page, limit, navigate]);
+  }, [sort, categoryID, page, limit, searchValue, navigate]);
 
-  return status === 'error' ? (
-    <>
-      <h2>Произошла ошибка соединения</h2>
-      <p>
-        {messageError}{' '}
-        <Link to="/" className="button">
-          главную страницу
-        </Link>
-      </p>
-    </>
-  ) : (
+  if (status === 'error') {
+    return (
+      <>
+        <h2>Произошла ошибка соединения</h2>
+        <p>
+          {messageError} {/* FIX not working link */}
+          <Link to="/" className="button">
+            главную страницу
+          </Link>
+        </p>
+      </>
+    );
+  }
+
+  return (
     <>
       <h2 className="content__title">
         {status === 'loading' ? 'Загрузка ...' : 'Все пиццы'}
