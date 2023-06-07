@@ -1,12 +1,15 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import qs from 'qs';
+
 import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
-import { useDispatch, useSelector } from 'react-redux';
-import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
-import { setFilters } from '../redux/slices/filterSlice';
+
 import { sorting } from './Sort';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { setFilters } from '../redux/slices/filterSlice';
 
 export function ContentItems() {
   const categoryID = useSelector((state) => state.filter.categoryID);
@@ -14,7 +17,7 @@ export function ContentItems() {
   const page = useSelector((state) => state.filter.page);
   const limit = useSelector((state) => state.filter.limit);
   const searchValue = useSelector((state) => state.filter.search);
-  const { items, status } = useSelector((state) => state.pizza);
+  const { items, status, messageError } = useSelector((state) => state.pizza);
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -77,7 +80,17 @@ export function ContentItems() {
     isMounted.current = true;
   }, [sort, categoryID, page, limit, navigate]);
 
-  return (
+  return status === 'error' ? (
+    <>
+      <h2>Произошла ошибка соединения</h2>
+      <p>
+        {messageError}{' '}
+        <Link to="/" className="button">
+          главную страницу
+        </Link>
+      </p>
+    </>
+  ) : (
     <>
       <h2 className="content__title">
         {status === 'loading' ? 'Загрузка ...' : 'Все пиццы'}

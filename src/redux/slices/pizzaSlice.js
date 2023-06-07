@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchPizzas = createAsyncThunk(
   'pizza/fetchPizzasStatus',
-  async ({ sort, searchValue, categoryID, limit, page }) => {
+  async ({ sort, searchValue, categoryID, limit, page }, thunkApi) => {
     const response = await axios.get(
       `https://64762957e607ba4797dd62ed.mockapi.io/pizza/items`,
       {
@@ -19,13 +19,17 @@ export const fetchPizzas = createAsyncThunk(
         },
       }
     );
-    return response.data;
+    if (response.data.length === 0) {
+      return thunkApi.rejectWithValue('Пицц не найдено');
+    }
+    return thunkApi.fulfillWithValue(response.data);
   }
 );
 
 const initialState = {
   items: [],
   status: 'loading',
+  messageError: '',
 };
 
 export const pizzaSlice = createSlice({
@@ -40,13 +44,15 @@ export const pizzaSlice = createSlice({
     [fetchPizzas.pending]: (state) => {
       state.status = 'loading';
       state.items = [];
+      state.messageError = '';
     },
     [fetchPizzas.fulfilled]: (state, action) => {
       state.items = action.payload;
       state.status = 'success';
     },
-    [fetchPizzas.rejected]: (state) => {
+    [fetchPizzas.rejected]: (state, action) => {
       state.status = 'error';
+      state.messageError = action.payload;
       state.items = [];
     },
   },

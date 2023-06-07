@@ -9,15 +9,9 @@ const Search = () => {
   const dispatch = useDispatch();
   const inputRef = useRef();
 
-  const updateSearchValue = useCallback(() => {
-    debounce((str) => {
-      dispatch(setSearchValue(str));
-    }, 500);
-  }, [dispatch]);
-
-  useEffect(() => {
-    updateSearchValue();
-  }, [updateSearchValue]);
+  const updateSearchValue = debounce((str) => {
+    dispatch(setSearchValue(str));
+  }, 500);
 
   const onChangeInputValue = (event) => {
     setSearchTemp(event.target.value);
