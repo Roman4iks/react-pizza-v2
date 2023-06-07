@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
@@ -8,23 +8,25 @@ const Search = () => {
   const [searchTemp, setSearchTemp] = useState('');
 
   const dispatch = useDispatch();
-  const inputRef = useRef();
 
-  const updateSearchValue = useCallback(
-    debounce((str) => {
-      dispatch(setSearchValue(str));
-    }, 500),
-    []
+  const updateSearchValue = useMemo(
+    () =>
+      debounce((str) => {
+        dispatch(setSearchValue(str));
+      }, 500),
+    [dispatch]
   );
 
-  const onChangeInputValue = (event) => {
-    setSearchTemp(event.target.value);
-    updateSearchValue(event.target.value);
-  };
+  const onChangeInputValue = useCallback(
+    (event) => {
+      setSearchTemp(event.target.value);
+      updateSearchValue(event.target.value);
+    },
+    [updateSearchValue]
+  );
 
   return (
     <input
-      ref={inputRef}
       value={searchTemp}
       onChange={(event) => onChangeInputValue(event)}
       className={styles.root}
