@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
@@ -28,7 +28,7 @@ const Search = () => {
   return (
     <input
       value={searchTemp}
-      onChange={(event) => onChangeInputValue(event)}
+      onChange={onChangeInputValue}
       className={styles.root}
       placeholder="Поиск... "
     />
