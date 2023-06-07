@@ -24,7 +24,7 @@ const Search = () => {
       value={searchTemp}
       onChange={(event) => onChangeInputValue(event)}
       className={styles.root}
-      placeholder="Поиск..."
+      placeholder="Поиск... "
     />
   );
 };
