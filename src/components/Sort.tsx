@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
+import { useOutsideClick } from '../hooks/useOutsideClick';
 
 type SortItem = {
   name: string;
@@ -20,6 +21,16 @@ export function Sort() {
   const [popupActive, setPopupActive] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
+  const onClose = () => {
+    setPopupActive(false);
+  };
+
+  useOutsideClick({
+    elementRef: sortRef,
+    onOutsideClick: onClose,
+    enabled: popupActive,
+  });
+
   const sort = useSelector((state: any) => state.filter.sort);
   const dispatch = useDispatch();
 
@@ -27,20 +38,6 @@ export function Sort() {
     dispatch(setSort(sortItem));
     setPopupActive(false);
   }
-
-  useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      const tagRef = (event.composedPath && event.composedPath()) || event.path;
-
-      if (!tagRef.includes(sortRef.current)) {
-        setPopupActive(false);
-      }
-    };
-
-    document.body.addEventListener('click', handleClickOutside);
-
-    return () => document.body.removeEventListener('click', handleClickOutside);
-  }, []);
 
   return (
     <div ref={sortRef} className="sort">
