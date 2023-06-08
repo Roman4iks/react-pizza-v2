@@ -11,11 +11,38 @@ import { sorting } from './Sort';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
 import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 
-export function ContentItems() {
-  const { categoryID, sort, page, limit, searchValue } =
+type ContentProps = {
+  categoryID: number;
+  sort: any;
+  page: number;
+  limit: number;
+  searchValue: string;
+};
+
+type ItemProps = {
+  id: string;
+  imageUrl: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  category: number;
+  rating: number;
+};
+
+type ItemStatus = {
+  items: ItemProps[];
+  status: string;
+  messageError: string;
+};
+
+export const ContentItems = () => {
+  const { categoryID, sort, page, limit, searchValue }: ContentProps =
     useSelector(selectFilter);
 
-  const { items, status, messageError } = useSelector((state) => state.pizza);
+  const { items, status, messageError }: ItemStatus = useSelector(
+    (state: any) => state.pizza
+  );
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -25,7 +52,8 @@ export function ContentItems() {
 
   const getPizzas = useCallback(async () => {
     if (!isSearch.current) {
-      dispatch(
+      await dispatch(
+        // @ts-ignore
         fetchPizzas({
           categoryID,
           sort,
@@ -46,7 +74,7 @@ export function ContentItems() {
         (obj) => obj.sortProperty === params.sortProperty
       );
 
-      const setSort = (sort) => {
+      const setSort = (sort: any) => {
         dispatch(
           setFilters({
             ...params,
@@ -106,10 +134,10 @@ export function ContentItems() {
           : items.map((item) => (
               <Link key={item.id} to={`/pizza/${item.id}`}>
                 {' '}
-                <PizzaBlock {...item} />{' '}
+                <PizzaBlock {...item} id={parseInt(item.id)} />{' '}
               </Link>
             ))}
       </div>
     </>
   );
-}
+};
