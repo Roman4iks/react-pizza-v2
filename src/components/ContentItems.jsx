@@ -103,7 +103,12 @@ export function ContentItems() {
           ? [...new Array(6)].map((_, index) => (
               <PizzaBlockSkeleton key={index} />
             ))
-          : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
+          : items.map((item) => (
+              <Link key={item.id} to={`/pizza/${item.id}`}>
+                {' '}
+                <PizzaBlock {...item} />{' '}
+              </Link>
+            ))}
       </div>
     </>
   );

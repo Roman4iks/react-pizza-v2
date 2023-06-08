@@ -4,6 +4,7 @@ import { CartNotFound } from './pages/CartNotFound';
 import { Home } from './pages/Home';
 import { Cart } from './pages/Cart';
 import './scss/app.scss';
+import Pizza from './pages/Pizza';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/pizza/:id" element={<Pizza />} />
           <Route path="*" element={<CartNotFound />} />
         </Routes>
       </div>
