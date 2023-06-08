@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter, setCategoryID } from '../redux/slices/filterSlice';
 
-export function Categories() {
-  const categories = [
+export const Categories = () => {
+  const categories: string[] = [
     'Все',
     'Мясные',
     'Вегетарианская',
@@ -29,4 +29,4 @@ export function Categories() {
       </ul>
     </div>
   );
-}
+};
