@@ -4,21 +4,21 @@ import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../redux/slices/filterSlice';
 
-const Search = () => {
+const Search: React.FC = () => {
   const [searchTemp, setSearchTemp] = useState('');
 
   const dispatch = useDispatch();
 
   const updateSearchValue = useMemo(
     () =>
-      debounce((str) => {
+      debounce((str: string) => {
         dispatch(setSearchValue(str));
       }, 500),
     [dispatch]
   );
 
   const onChangeInputValue = useCallback(
-    (event) => {
+    (event: any) => {
       setSearchTemp(event.target.value);
       updateSearchValue(event.target.value);
     },
