@@ -10,6 +10,7 @@ import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 import { sorting } from './Sort';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
 import { selectFilter, setFilters } from '../redux/slices/filterSlice';
+import { useIsMounted } from '../hooks/useIsMounted';
 
 type ContentProps = {
   categoryID: number;
@@ -45,7 +46,7 @@ export const ContentItems = () => {
   );
 
   const isSearch = useRef(false);
-  const isMounted = useRef(false);
+  const isMounted = useIsMounted();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -95,17 +96,17 @@ export const ContentItems = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      // FIX base url page
-      const queryString = qs.stringify({
-        sortProperty: sort.sortProperty,
-        categoryID,
-        page,
-      });
-
-      navigate(`?${queryString}`);
+      return;
     }
-    isMounted.current = true;
-  }, [sort, categoryID, page, limit, searchValue, navigate]);
+
+    const queryString = qs.stringify({
+      sortProperty: sort.sortProperty,
+      categoryID,
+      page,
+    });
+
+    navigate(`?${queryString}`);
+  }, [isMounted, sort, page, categoryID, navigate]);
 
   if (status === 'error') {
     return (
