@@ -1,10 +1,10 @@
+import React from 'react';
 import { useEffect } from 'react';
 import { Sort } from '../components/Sort';
 import { Categories } from '../components/Categories';
 import { ContentItems } from '../components/ContentItems';
 import { Pagination } from '../components/Pagination';
-
-export const Home = () => {
+export const Home: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
