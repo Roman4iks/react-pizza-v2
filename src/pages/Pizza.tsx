@@ -6,12 +6,19 @@ import { addItem, selectCartById } from '../redux/slices/cartSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
-const Pizza = () => {
+const Pizza: React.FC = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = useState({});
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+    types: Array<number>;
+    sizes: Array<number>;
+    rating: number;
+  }>();
 
-  const [sizeActive, setSizeActive] = useState(0);
-  const [typeActive, setTypeActive] = useState(0);
+  const [sizeActive, setSizeActive] = useState<number>(0);
+  const [typeActive, setTypeActive] = useState<number>(0);
 
   const cartItem = useSelector(selectCartById(id));
   const addedCount = cartItem ? cartItem.count : 0;
@@ -19,12 +26,14 @@ const Pizza = () => {
   const dispatch = useDispatch();
 
   const onClickAdd = () => {
-    const item = {
-      ...pizza,
-      type: typeNames[typeActive],
-      size: pizza.sizes[sizeActive],
-    };
-    dispatch(addItem(item));
+    if (pizza) {
+      const item = {
+        ...pizza,
+        type: typeNames[typeActive],
+        size: pizza.sizes[sizeActive],
+      };
+      dispatch(addItem(item));
+    }
   };
 
   useEffect(() => {
@@ -41,8 +50,8 @@ const Pizza = () => {
     fetchPizza();
   }, [id]);
 
-  if (!pizza.sizes || !pizza) {
-    return 'Загрузка';
+  if (!pizza || !pizza.sizes) {
+    return <div>Загрузка...</div>;
   }
 
   return (
