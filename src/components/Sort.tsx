@@ -38,6 +38,10 @@ export function Sort() {
     dispatch(setSort(sortItem));
     setPopupActive(false);
   }
+  // FIX sort undefined
+  if (!sort) {
+    return <div>ERROR</div>;
+  }
 
   return (
     <div ref={sortRef} className="sort">

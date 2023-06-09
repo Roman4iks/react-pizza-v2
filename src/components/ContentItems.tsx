@@ -14,7 +14,7 @@ import { useIsMounted } from '../hooks/useIsMounted';
 
 type ContentProps = {
   categoryID: number;
-  sort: any;
+  sort: string[];
   page: number;
   limit: number;
   searchValue: string;
