@@ -3,24 +3,18 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, selectCartById } from '../redux/slices/cartSlice';
+import { Pizza } from '../redux/slices/pizzaSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
-const Pizza: React.FC = () => {
+const PizzaBlock: React.FC = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = useState<{
-    imageUrl: string;
-    title: string;
-    price: number;
-    types: Array<number>;
-    sizes: Array<number>;
-    rating: number;
-  }>();
+  const [pizza, setPizza] = useState<Pizza>();
 
   const [sizeActive, setSizeActive] = useState<number>(0);
   const [typeActive, setTypeActive] = useState<number>(0);
 
-  const cartItem = useSelector(selectCartById(id));
+  const cartItem = useSelector(selectCartById(Number(id)));
   const addedCount = cartItem ? cartItem.count : 0;
 
   const dispatch = useDispatch();
@@ -31,6 +25,7 @@ const Pizza: React.FC = () => {
         ...pizza,
         type: typeNames[typeActive],
         size: pizza.sizes[sizeActive],
+        count: 0,
       };
       dispatch(addItem(item));
     }
@@ -116,4 +111,4 @@ const Pizza: React.FC = () => {
   );
 };
 
-export default Pizza;
+export default PizzaBlock;

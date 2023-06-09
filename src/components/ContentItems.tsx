@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import qs from 'qs';
 
@@ -8,56 +8,38 @@ import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 
 import { sorting } from './Sort';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
-import { selectFilter, setFilters } from '../redux/slices/filterSlice';
+import {
+  FetchPizzasArgs,
+  SelectPizzas,
+  Status,
+  fetchPizzas,
+} from '../redux/slices/pizzaSlice';
+import {
+  FilterSliceState,
+  selectFilter,
+  setFilters,
+} from '../redux/slices/filterSlice';
 import { useIsMounted } from '../hooks/useIsMounted';
-
-type ContentProps = {
-  categoryID: number;
-  sort: string[];
-  page: number;
-  limit: number;
-  searchValue: string;
-};
-
-type ItemProps = {
-  id: string;
-  imageUrl: string;
-  title: string;
-  types: number[];
-  sizes: number[];
-  price: number;
-  category: number;
-  rating: number;
-};
-
-type ItemStatus = {
-  items: ItemProps[];
-  status: string;
-  messageError: string;
-};
+import { useAppDispatch } from '../redux/store';
 
 export const ContentItems = () => {
-  const { categoryID, sort, page, limit, searchValue }: ContentProps =
+  const { categoryID, sort, page, limit, searchValue }: FilterSliceState =
     useSelector(selectFilter);
 
-  const { items, status, messageError }: ItemStatus = useSelector(
-    (state: any) => state.pizza
-  );
+  const { items, status } = useSelector(SelectPizzas);
 
   const isSearch = useRef(false);
   const isMounted = useIsMounted();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const getPizzas = useCallback(async () => {
     if (!isSearch.current) {
       await dispatch(
-        // @ts-ignore
         fetchPizzas({
           categoryID,
-          sort,
+          sortBy: sort,
           page,
           limit,
           searchValue,
@@ -69,22 +51,27 @@ export const ContentItems = () => {
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params = qs.parse(
+        window.location.search.substring(1)
+      ) as unknown as FetchPizzasArgs;
 
       const sort = sorting.find(
-        (obj) => obj.sortProperty === params.sortProperty
+        (obj) => obj.sortProperty === params.sortBy.sortProperty
       );
 
-      const setSort = (sort: any) => {
-        dispatch(
-          setFilters({
-            ...params,
-            sort,
-          })
-        );
-      };
+      if (sort) {
+        params.sortBy = sort;
+      }
 
-      setSort(sort);
+      dispatch(
+        setFilters({
+          searchValue: params.searchValue,
+          categoryID: Number(params.categoryID),
+          page: Number(params.page),
+          limit: Number(params.limit),
+          sort: sort || sorting[0],
+        })
+      );
 
       isSearch.current = true;
     }
@@ -106,18 +93,24 @@ export const ContentItems = () => {
     });
 
     navigate(`?${queryString}`);
-  }, [isMounted, sort, page, categoryID, navigate]);
 
-  if (status === 'error') {
+    if (!window.location.search) {
+      dispatch(fetchPizzas({} as FetchPizzasArgs));
+    }
+  }, [
+    categoryID,
+    sort.sortProperty,
+    searchValue,
+    page,
+    isMounted,
+    navigate,
+    dispatch,
+  ]);
+
+  if (status === Status.ERROR) {
     return (
       <>
         <h2>Произошла ошибка соединения</h2>
-        <p>
-          {messageError} {/* FIX not working link */}
-          <Link to="/" className="button">
-            главную страницу
-          </Link>
-        </p>
       </>
     );
   }
@@ -125,19 +118,14 @@ export const ContentItems = () => {
   return (
     <>
       <h2 className="content__title">
-        {status === 'loading' ? 'Загрузка ...' : 'Все пиццы'}
+        {status === Status.LOADING ? 'Загрузка ...' : 'Все пиццы'}
       </h2>
       <div className="content__items">
-        {status === 'loading'
+        {status === Status.LOADING
           ? [...new Array(6)].map((_, index) => (
               <PizzaBlockSkeleton key={index} />
             ))
-          : items.map((item) => (
-              <Link key={item.id} to={`/pizza/${item.id}`}>
-                {' '}
-                <PizzaBlock {...item} id={parseInt(item.id)} />{' '}
-              </Link>
-            ))}
+          : items.map((item) => <PizzaBlock {...item} id={item.id} />)}
       </div>
     </>
   );
