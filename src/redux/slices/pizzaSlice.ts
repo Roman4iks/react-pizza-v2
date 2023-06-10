@@ -2,6 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { FetchPizzasArgs, Pizza } from '../../@types';
 import { Status } from '../../@types/enums';
+
 export const fetchPizzas = createAsyncThunk<Pizza[], FetchPizzasArgs>(
   'pizza/fetchPizzas',
   async ({ sortBy, searchValue, categoryID, limit, page }, thunkApi) => {
