@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, selectCartById } from '../redux/slices/cartSlice';
-import { Pizza } from '../redux/slices/pizzaSlice';
+import { addItem } from '../redux/slices/cartSlice';
+import { SelectCartById } from '../redux/selectors';
+import { Pizza } from '../@types';
 
 const typeNames = ['тонкое', 'традиционное'];
 
@@ -14,7 +15,7 @@ const PizzaBlock: React.FC = () => {
   const [sizeActive, setSizeActive] = useState<number>(0);
   const [typeActive, setTypeActive] = useState<number>(0);
 
-  const cartItem = useSelector(selectCartById(Number(id)));
+  const cartItem = useSelector(SelectCartById(Number(id)));
   const addedCount = cartItem ? cartItem.count : 0;
 
   const dispatch = useDispatch();

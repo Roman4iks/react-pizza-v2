@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SortPropertyEnum, setSort } from '../redux/slices/filterSlice';
+import { setSort } from '../redux/slices/filterSlice';
 import { useOutsideClick } from '../hooks/useOutsideClick';
+import { SortPropertyEnum } from '../@types/enums';
 
 type SortItem = {
   name: string;

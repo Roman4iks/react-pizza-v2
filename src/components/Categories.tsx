@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilter, setCategoryID } from '../redux/slices/filterSlice';
+import { setCategoryID } from '../redux/slices/filterSlice';
+import { SelectFilter } from '../redux/selectors';
 
 export const Categories = () => {
   const categories: string[] = [
@@ -11,7 +12,7 @@ export const Categories = () => {
     'Закрытые',
   ];
 
-  const { categoryID } = useSelector(selectFilter);
+  const { categoryID } = useSelector(SelectFilter);
   const dispatch = useDispatch();
 
   return (

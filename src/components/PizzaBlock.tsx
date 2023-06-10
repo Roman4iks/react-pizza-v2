@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CartItem, addItem, selectCartById } from '../redux/slices/cartSlice';
+import { addItem } from '../redux/slices/cartSlice';
 import { useAppDispatch } from '../redux/store';
 import { Link } from 'react-router-dom';
+import { SelectCartById } from '../redux/selectors';
+import { CartItem } from '../@types';
 
 const typeNames: string[] = ['тонкое', 'традиционное'];
 
@@ -29,7 +31,7 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
 
   const dispatch = useAppDispatch();
 
-  const cartItem = useSelector(selectCartById(id));
+  const cartItem = useSelector(SelectCartById(id));
 
   const addedCount = cartItem ? cartItem.count : 0;
 

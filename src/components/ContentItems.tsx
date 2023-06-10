@@ -8,23 +8,17 @@ import { PizzaBlock } from './PizzaBlock';
 import PizzaBlockSkeleton from './skeletons/PizzaBlockSkeleton';
 
 import { sorting } from './Sort';
-import {
-  FetchPizzasArgs,
-  SelectPizzas,
-  Status,
-  fetchPizzas,
-} from '../redux/slices/pizzaSlice';
-import {
-  FilterSliceState,
-  selectFilter,
-  setFilters,
-} from '../redux/slices/filterSlice';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { setFilters } from '../redux/slices/filterSlice';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { useAppDispatch } from '../redux/store';
+import { SelectPizzas, SelectFilter } from '../redux/selectors';
+import { FetchPizzasArgs, FilterSliceState } from '../@types';
+import { Status } from '../@types/enums';
 
 export const ContentItems = () => {
   const { categoryID, sort, page, limit, searchValue }: FilterSliceState =
-    useSelector(selectFilter);
+    useSelector(SelectFilter);
 
   const { items, status } = useSelector(SelectPizzas);
 
