@@ -3,13 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 import { SortPropertyEnum } from '../@types/enums';
+import { Sort } from '../@types';
 
-type SortItem = {
-  name: string;
-  sortProperty: SortPropertyEnum;
-};
-
-export const sorting: SortItem[] = [
+export const sorting: Sort[] = [
   { name: 'популярности убыванию', sortProperty: SortPropertyEnum.RATING_DESC },
   {
     name: 'популярности возрастание',
@@ -38,7 +34,7 @@ export function SortPopup() {
   const sort = useSelector((state: any) => state.filter.sort);
   const dispatch = useDispatch();
 
-  function onClickSort(sortItem: SortItem) {
+  function onClickSort(sortItem: Sort) {
     dispatch(setSort(sortItem));
     setPopupActive(false);
   }

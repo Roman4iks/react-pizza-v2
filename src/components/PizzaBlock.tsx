@@ -4,21 +4,11 @@ import { addItem } from '../redux/slices/cartSlice';
 import { useAppDispatch } from '../redux/store';
 import { Link } from 'react-router-dom';
 import { SelectCartById } from '../redux/selectors';
-import { CartItem } from '../@types';
+import { CartItem, Pizza } from '../@types';
 
 const typeNames: string[] = ['тонкое', 'традиционное'];
 
-type PizzaBlockProps = {
-  id: number;
-  title: string;
-  price: number;
-  imageUrl: string;
-  sizes: number[];
-  types: number[];
-  rating: number;
-};
-
-export const PizzaBlock: React.FC<PizzaBlockProps> = ({
+export const PizzaBlock: React.FC<Pizza> = ({
   id,
   title,
   price,

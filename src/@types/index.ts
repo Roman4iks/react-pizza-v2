@@ -1,4 +1,4 @@
-import { SortPropertyEnum } from './enums';
+import { SortPropertyEnum, Status } from './enums';
 
 export type Pizza = {
   id: number;
@@ -14,14 +14,6 @@ export type Sort = {
   name: string;
   sortProperty: SortPropertyEnum;
 };
-
-export interface FilterSliceState {
-  searchValue: string;
-  categoryID: number;
-  sort: Sort;
-  page: number;
-  limit: number;
-}
 
 export type FetchPizzasArgs = {
   sortBy: Sort;
@@ -41,8 +33,21 @@ export type CartItem = {
   count: number;
 };
 
+export interface FilterSliceState {
+  searchValue: string;
+  categoryID: number;
+  sort: Sort;
+  page: number;
+  limit: number;
+}
+
 export interface CartSliceState {
   totalPrice: number;
-  items: CartItem[];
   totalCount: number;
+  items: CartItem[];
+}
+
+export interface PizzaSliceState {
+  items: Pizza[];
+  status: Status;
 }

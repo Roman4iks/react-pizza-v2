@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { FetchPizzasArgs, Pizza } from '../../@types';
+import { FetchPizzasArgs, Pizza, PizzaSliceState } from '../../@types';
 import { Status } from '../../@types/enums';
 
 export const fetchPizzas = createAsyncThunk<Pizza[], FetchPizzasArgs>(
@@ -27,11 +27,6 @@ export const fetchPizzas = createAsyncThunk<Pizza[], FetchPizzasArgs>(
     return thunkApi.fulfillWithValue(response.data);
   }
 );
-
-interface PizzaSliceState {
-  items: Pizza[];
-  status: Status;
-}
 
 const initialState: PizzaSliceState = {
   items: [],
