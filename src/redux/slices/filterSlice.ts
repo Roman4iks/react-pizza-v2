@@ -41,7 +41,7 @@ export const filterSlice = createSlice({
           name: 'популярности возрастанию',
           sortProperty: SortPropertyEnum.RATING_DESC,
         };
-        state.limit = 4;
+        state.limit = 6;
         state.searchValue = '';
       }
     },
