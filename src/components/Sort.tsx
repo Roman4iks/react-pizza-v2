@@ -6,15 +6,15 @@ import { SortPropertyEnum } from '../@types/enums';
 import { Sort } from '../@types';
 
 export const sorting: Sort[] = [
-  { name: 'популярности убыванию', sortProperty: SortPropertyEnum.RATING_DESC },
+  { name: 'по популярности', sortProperty: SortPropertyEnum.RATING_DESC },
   {
-    name: 'популярности возрастание',
+    name: 'от популярности',
     sortProperty: SortPropertyEnum.RATING_ASC,
   },
-  { name: 'цене убыванию', sortProperty: SortPropertyEnum.PRICE_DESC },
-  { name: 'цене возрастанию', sortProperty: SortPropertyEnum.PRICE_ASC },
-  { name: 'алфавиту убыванию', sortProperty: SortPropertyEnum.TITLE_DESC },
-  { name: 'алфавиту возрастанию', sortProperty: SortPropertyEnum.TITLE_ASC },
+  { name: 'по цене', sortProperty: SortPropertyEnum.PRICE_DESC },
+  { name: 'от цены', sortProperty: SortPropertyEnum.PRICE_ASC },
+  { name: 'по алфавиту', sortProperty: SortPropertyEnum.TITLE_DESC },
+  { name: 'от алфавита', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
 export function SortPopup() {
