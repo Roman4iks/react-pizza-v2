@@ -10,7 +10,7 @@ const initialState: FilterSliceState = {
     sortProperty: SortPropertyEnum.RATING_DESC,
   },
   page: 1,
-  limit: 4,
+  limit: 6,
 };
 
 export const filterSlice = createSlice({
